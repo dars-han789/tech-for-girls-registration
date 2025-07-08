@@ -1,13 +1,11 @@
 let shareClicks = 0;
 const maxShares = 5;
 
-// Check localStorage for previous submission
 if (localStorage.getItem('submitted') === 'true') {
   document.getElementById('registrationForm').style.display = 'none';
   document.getElementById('finalMsg').style.display = 'block';
 }
 
-// WhatsApp Share Button
 document.getElementById('shareBtn').addEventListener('click', () => {
   if (shareClicks < maxShares) {
     shareClicks++;
@@ -22,7 +20,6 @@ document.getElementById('shareBtn').addEventListener('click', () => {
   }
 });
 
-// Form Submission
 document.getElementById('registrationForm').addEventListener('submit', async (e) => {
   e.preventDefault();
 
@@ -43,28 +40,34 @@ document.getElementById('registrationForm').addEventListener('submit', async (e)
     return;
   }
 
-  const formData = new FormData();
-  formData.append("name", name);
-  formData.append("phone", phone);
-  formData.append("email", email);
-  formData.append("college", college);
-  formData.append("screenshot", file); // Send as file blob
+  const reader = new FileReader();
+  reader.onload = async function () {
+    const base64 = reader.result.split(',')[1];
 
-  try {
-    const response = await fetch("https://script.google.com/macros/s/AKfycbz0l75D1ALn06H9l_Tttx1BHXdT5ppBPMdiAPCbK0i6nhNxfqZBZBPntl2-XEsCkpFcyw/exec", {
-      method: "POST",
-      body: formData,
-    });
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("phone", phone);
+    formData.append("email", email);
+    formData.append("college", college);
+    formData.append("screenshot", base64); // Send as base64
 
-    if (response.ok) {
-      document.getElementById('registrationForm').style.display = 'none';
-      document.getElementById('finalMsg').style.display = 'block';
-      localStorage.setItem('submitted', 'true');
-    } else {
-      alert("Failed to submit. Please try again.");
+    try {
+      const response = await fetch("https://script.google.com/macros/s/AKfycbxTjPY4QCABqujgHNsuCrIp4_5fZ2H9FgqkJZ-hqmK54aNoAwZypdiNwW319vNnW-8j_A/exec", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (response.ok) {
+        document.getElementById('registrationForm').style.display = 'none';
+        document.getElementById('finalMsg').style.display = 'block';
+        localStorage.setItem('submitted', 'true');
+      } else {
+        alert("Failed to submit. Please try again.");
+      }
+    } catch (error) {
+      console.error("Submission error:", error);
+      alert("Error submitting the form.");
     }
-  } catch (error) {
-    console.error("Submission error:", error);
-    alert("Error submitting the form.");
-  }
+  };
+  reader.readAsDataURL(file);
 });
