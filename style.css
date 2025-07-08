@@ -1,91 +1,85 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
-
 body {
-  font-family: 'Inter', sans-serif;
   margin: 0;
   padding: 0;
-  background: linear-gradient(135deg, #b5f5ec, #e0c3fc);
+  font-family: 'Quicksand', sans-serif;
+  background: linear-gradient(to right, #ffd6e8, #ffe6f3);
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
 }
 
-.glass-card {
-  background: rgba(255, 255, 255, 0.85);
-  padding: 40px 30px;
+.container {
+  width: 90%;
+  max-width: 500px;
+}
+
+.card {
+  background: #fff;
   border-radius: 20px;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
-  width: 95%;
-  max-width: 480px;
+  padding: 30px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  transition: 0.4s ease-in-out;
+}
+
+h1, h2 {
   text-align: center;
-  animation: fadeIn 1s ease;
+  color: #e91e63;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-h2 {
-  color: #333;
+.form-group {
   margin-bottom: 20px;
-  font-weight: 600;
 }
 
-input, button {
+.form-group label {
+  display: block;
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="file"] {
   width: 100%;
-  padding: 12px 14px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  font-size: 15px;
+  padding: 12px;
+  border: 2px solid #f8bbd0;
+  border-radius: 12px;
+  font-size: 1rem;
+  outline: none;
   transition: 0.3s;
 }
 
 input:focus {
-  border-color: #7b2cbf;
-  outline: none;
+  border-color: #e91e63;
 }
 
 button {
-  background-color: #7b2cbf;
+  width: 100%;
+  background: #e91e63;
   color: white;
-  font-weight: 600;
   border: none;
+  padding: 14px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 12px;
   cursor: pointer;
+  transition: background 0.3s ease;
 }
 
 button:hover {
-  background-color: #5a189a;
+  background: #d81b60;
 }
 
-#shareCount {
-  margin-top: 10px;
-  color: #444;
-  font-size: 15px;
-}
-
-#shareComplete {
-  display: none;
+.success-text {
   color: green;
-  font-weight: 600;
-  margin-top: 5px;
+  font-weight: bold;
+  margin-top: 10px;
+  text-align: center;
 }
 
-#finalMsg {
-  font-size: 17px;
-  margin-top: 20px;
-  display: none;
-  color: #1b4332;
-  font-weight: 600;
-}
-
-label {
-  display: block;
-  text-align: left;
-  font-size: 14px;
-  color: #333;
-  margin-top: 12px;
-  margin-bottom: 4px;
+.share-section {
+  text-align: center;
+  margin-bottom: 20px;
 }
