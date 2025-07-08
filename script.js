@@ -52,7 +52,7 @@ document.getElementById('registrationForm').addEventListener('submit', async (e)
   formData.append("screenshot", file);
 
   try {
-    const response = await fetch("https://script.google.com/macros/s/AKfycbxJKZqR88U_S9xW7vC9_DkN3h8uddan_j4WzTdD07bJKKgPxz-lfX-r5dpZiae4oUdqZQ/exec", {
+    const response = await fetch("https://script.google.com/macros/s/AKfycbwvx5ptP6O1vSPTdt3BgkH6FTbAwa5HPszqvfbmF23blxyUNZnBiuzVKJku0qZOJ54AvQ/exec", {
 
       method: "POST",
       body: formData,
