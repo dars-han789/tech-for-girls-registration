@@ -83,3 +83,43 @@ button:hover {
   text-align: center;
   margin-bottom: 20px;
 }
+
+/* Animation keyframes */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); box-shadow: 0 0 0 rgba(233, 30, 99, 0.7); }
+  50% { transform: scale(1.03); box-shadow: 0 0 12px rgba(233, 30, 99, 0.4); }
+  100% { transform: scale(1); box-shadow: 0 0 0 rgba(233, 30, 99, 0.7); }
+}
+
+/* Fade in effect for form and success card */
+.card {
+  animation: fadeInUp 0.6s ease both;
+}
+
+/* Button hover animation */
+button:hover {
+  animation: pulse 0.8s ease-in-out;
+}
+
+/* Input field focus glow */
+input:focus {
+  border-color: #e91e63;
+  box-shadow: 0 0 5px #f06292;
+  transition: box-shadow 0.3s ease;
+}
+
+/* Animate success message */
+#finalMsg {
+  animation: fadeInUp 0.8s ease both;
+}
