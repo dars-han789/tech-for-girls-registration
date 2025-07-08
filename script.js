@@ -1,13 +1,13 @@
 let shareClicks = 0;
 const maxShares = 5;
 
-// Restore state if already submitted
+// Restore previous submission state
 if (localStorage.getItem('submitted') === 'true') {
   document.getElementById('registrationForm').style.display = 'none';
   document.getElementById('finalMsg').style.display = 'block';
 }
 
-// WhatsApp share handler
+// WhatsApp Sharing Logic
 document.getElementById('shareBtn').addEventListener('click', () => {
   if (shareClicks < maxShares) {
     shareClicks++;
@@ -23,7 +23,7 @@ document.getElementById('shareBtn').addEventListener('click', () => {
   }
 });
 
-// Form submission handler
+// Form Submission
 document.getElementById('registrationForm').addEventListener('submit', async (e) => {
   e.preventDefault();
 
@@ -44,37 +44,28 @@ document.getElementById('registrationForm').addEventListener('submit', async (e)
     return;
   }
 
-  // Read file as base64
-  const reader = new FileReader();
+  const formData = new FormData();
+  formData.append("name", name);
+  formData.append("phone", phone);
+  formData.append("email", email);
+  formData.append("college", college);
+  formData.append("screenshot", file);
 
-  reader.onload = async function () {
-    const base64File = reader.result.split(',')[1];
+  try {
+    const response = await fetch("https://script.google.com/macros/s/AKfycbyjcaTr-yEv16991BTKqs8I4LCVBZQWQ651k-mMbjXJ2anmLZX-Q736tqKLodW6gjV4PQ/exec", {
+      method: "POST",
+      body: formData,
+    });
 
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("phone", phone);
-    formData.append("email", email);
-    formData.append("college", college);
-    formData.append("screenshot", base64File); // base64 image data
-
-    try {
-      const response = await fetch("https://script.google.com/macros/s/AKfycbwJWgksHd6F6C7I8hhGivA4Kip9MlmWJ7mm3zDGZIwG2UzuFmmNg2t2I1Bj_fytfC8vkw/exec", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (response.ok) {
-        document.getElementById('registrationForm').style.display = 'none';
-        document.getElementById('finalMsg').style.display = 'block';
-        localStorage.setItem('submitted', 'true');
-      } else {
-        alert("Failed to submit. Please try again.");
-      }
-    } catch (error) {
-      console.error("Submission error:", error);
-      alert("Error submitting the form.");
+    if (response.ok) {
+      document.getElementById('registrationForm').style.display = 'none';
+      document.getElementById('finalMsg').style.display = 'block';
+      localStorage.setItem('submitted', 'true');
+    } else {
+      alert("Failed to submit. Please try again.");
     }
-  };
-
-  reader.readAsDataURL(file); // Read file to base64
+  } catch (error) {
+    console.error("Submission error:", error);
+    alert("Error submitting the form.");
+  }
 });
