@@ -1,21 +1,20 @@
 let shareClicks = 0;
 const maxShares = 5;
 
-// Restore previous submission state
+// Check localStorage for previous submission
 if (localStorage.getItem('submitted') === 'true') {
   document.getElementById('registrationForm').style.display = 'none';
   document.getElementById('finalMsg').style.display = 'block';
 }
 
-// WhatsApp Sharing Logic
+// WhatsApp Share Button
 document.getElementById('shareBtn').addEventListener('click', () => {
   if (shareClicks < maxShares) {
     shareClicks++;
     document.getElementById('shareCount').textContent = `Click count: ${shareClicks}/5`;
 
     const message = encodeURIComponent("Hey Buddy, Join Tech For Girls Community");
-    const whatsappUrl = `https://wa.me/?text=${message}`;
-    window.open(whatsappUrl, '_blank');
+    window.open(`https://wa.me/?text=${message}`, '_blank');
 
     if (shareClicks === maxShares) {
       document.getElementById('shareComplete').style.display = 'block';
@@ -49,11 +48,10 @@ document.getElementById('registrationForm').addEventListener('submit', async (e)
   formData.append("phone", phone);
   formData.append("email", email);
   formData.append("college", college);
-  formData.append("screenshot", file);
+  formData.append("screenshot", file); // Send as file blob
 
   try {
     const response = await fetch("https://script.google.com/macros/s/AKfycbz0l75D1ALn06H9l_Tttx1BHXdT5ppBPMdiAPCbK0i6nhNxfqZBZBPntl2-XEsCkpFcyw/exec", {
-
       method: "POST",
       body: formData,
     });
