@@ -1,19 +1,34 @@
 let shareClicks = 0;
 const maxShares = 5;
 
-// Only allow digits in phone field
+// Allow only numbers in phone input
 document.getElementById('phone').addEventListener('input', function () {
   this.value = this.value.replace(/\D/g, '');
 });
 
-// Lock form after submission
+// Check if already submitted
 if (localStorage.getItem('submitted') === 'true') {
   document.getElementById('registrationForm').style.display = 'none';
   document.getElementById('finalMsg').style.display = 'block';
 }
 
-// WhatsApp Share Logic
+// WhatsApp Share Button (only after form filled)
 document.getElementById('shareBtn').addEventListener('click', () => {
+  const name = document.getElementById('name').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const college = document.getElementById('college').value.trim();
+
+  if (!name || !phone || !email || !college) {
+    alert("Please fill out the form completely before sharing.");
+    return;
+  }
+
+  if (!/^\d{10}$/.test(phone)) {
+    alert("Please enter a valid 10-digit phone number.");
+    return;
+  }
+
   if (shareClicks < maxShares) {
     shareClicks++;
     document.getElementById('shareCount').textContent = `Click count: ${shareClicks}/5`;
@@ -27,7 +42,7 @@ document.getElementById('shareBtn').addEventListener('click', () => {
   }
 });
 
-// Form Submission
+// Form submission logic
 document.getElementById('registrationForm').addEventListener('submit', (e) => {
   e.preventDefault();
 
@@ -63,7 +78,7 @@ document.getElementById('registrationForm').addEventListener('submit', (e) => {
     formData.append("phone", phone);
     formData.append("email", email);
     formData.append("college", college);
-    formData.append("screenshot", base64); // Send base64 image
+    formData.append("screenshot", base64);
 
     try {
       const response = await fetch("https://script.google.com/macros/s/AKfycbxTjPY4QCABqujgHNsuCrIp4_5fZ2H9FgqkJZ-hqmK54aNoAwZypdiNwW319vNnW-8j_A/exec", {
