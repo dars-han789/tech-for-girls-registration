@@ -14,6 +14,38 @@ if (localStorage.getItem('submitted') === 'true') {
 
 // WhatsApp Share Button (only after form is filled)
 document.getElementById('shareBtn').addEventListener('click', () => {
+  // WhatsApp Share Button (only after form is filled correctly)
+document.getElementById('shareBtn').addEventListener('click', () => {
+  const name = document.getElementById('name').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const college = document.getElementById('college').value.trim();
+
+  // Validate all fields
+  if (!name || !phone || !email || !college) {
+    alert("Please fill out all fields before sharing.");
+    return;
+  }
+
+  if (!/^\d{10}$/.test(phone)) {
+    alert("Please enter a valid 10-digit phone number.");
+    return;
+  }
+
+  // Proceed with WhatsApp sharing if all validations pass
+  if (shareClicks < maxShares) {
+    shareClicks++;
+    document.getElementById('shareCount').textContent = `Click count: ${shareClicks}/5`;
+
+    const message = encodeURIComponent("Hey Buddy, Join Tech For Girls Community");
+    window.open(`https://wa.me/?text=${message}`, '_blank');
+
+    if (shareClicks === maxShares) {
+      document.getElementById('shareComplete').style.display = 'block';
+    }
+  }
+});
+
   const name = document.getElementById('name').value.trim();
   const phone = document.getElementById('phone').value.trim();
   const email = document.getElementById('email').value.trim();
