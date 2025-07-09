@@ -1,6 +1,10 @@
 let shareClicks = 0;
 const maxShares = 5;
 
+document.getElementById('phone').addEventListener('input', function () {
+  this.value = this.value.replace(/\D/g, '');
+});
+
 // Check localStorage to lock form after submission
 if (localStorage.getItem('submitted') === 'true') {
   document.getElementById('registrationForm').style.display = 'none';
@@ -33,6 +37,12 @@ document.getElementById('registrationForm').addEventListener('submit', (e) => {
 
   const name = document.getElementById('name').value.trim();
   const phone = document.getElementById('phone').value.trim();
+  if (!/^\d{10}$/.test(phone)) {
+  alert("Please enter a valid 10-digit phone number.");
+  return;
+ }
+
+  
   const email = document.getElementById('email').value.trim();
   const college = document.getElementById('college').value.trim();
   const fileInput = document.getElementById('screenshot');
