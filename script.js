@@ -6,13 +6,13 @@ document.getElementById('phone').addEventListener('input', function () {
   this.value = this.value.replace(/\D/g, '');
 });
 
-// Check if already submitted
+// Lock form if already submitted
 if (localStorage.getItem('submitted') === 'true') {
   document.getElementById('registrationForm').style.display = 'none';
   document.getElementById('finalMsg').style.display = 'block';
 }
 
-// WhatsApp Share Button (only after form filled)
+// WhatsApp Share Button (only after form is filled)
 document.getElementById('shareBtn').addEventListener('click', () => {
   const name = document.getElementById('name').value.trim();
   const phone = document.getElementById('phone').value.trim();
@@ -20,12 +20,12 @@ document.getElementById('shareBtn').addEventListener('click', () => {
   const college = document.getElementById('college').value.trim();
 
   if (!name || !phone || !email || !college) {
-    alert("Please fill out the form completely before sharing.");
+    alert("Please fill in all form fields before sharing.");
     return;
   }
 
   if (!/^\d{10}$/.test(phone)) {
-    alert("Please enter a valid 10-digit phone number.");
+    alert("Enter a valid 10-digit phone number.");
     return;
   }
 
@@ -42,7 +42,7 @@ document.getElementById('shareBtn').addEventListener('click', () => {
   }
 });
 
-// Form submission logic
+// Form Submission
 document.getElementById('registrationForm').addEventListener('submit', (e) => {
   e.preventDefault();
 
@@ -81,7 +81,7 @@ document.getElementById('registrationForm').addEventListener('submit', (e) => {
     formData.append("screenshot", base64);
 
     try {
-      const response = await fetch("https://script.google.com/macros/s/AKfycbxTjPY4QCABqujgHNsuCrIp4_5fZ2H9FgqkJZ-hqmK54aNoAwZypdiNwW319vNnW-8j_A/exec", {
+      const response = await fetch("https://script.google.com/macros/s/AKfycbz0l75D1ALn06H9l_Tttx1BHXdT5ppBPMdiAPCbK0i6nhNxfqZBZBPntl2-XEsCkpFcyw/exec", {
         method: "POST",
         body: formData,
       });
@@ -91,10 +91,10 @@ document.getElementById('registrationForm').addEventListener('submit', (e) => {
         document.getElementById('finalMsg').style.display = 'block';
         localStorage.setItem('submitted', 'true');
       } else {
-        alert("Failed to submit. Please try again.");
+        alert("Submission failed. Try again.");
       }
     } catch (error) {
-      console.error("Submission error:", error);
+      console.error("Error:", error);
       alert("Error submitting the form.");
     }
   };
