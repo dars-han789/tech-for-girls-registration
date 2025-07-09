@@ -9,43 +9,42 @@
 </head>
 <body>
   <div class="container">
-    <div id="registrationForm" class="card">
+    <form id="registrationForm" class="card">
       <h1>💖 Tech for Girls Registration</h1>
 
       <div class="form-group">
-        <label>Name</label>
-        <input type="text" id="name" required>
+        <label for="name">Name</label>
+        <input type="text" id="name" required />
       </div>
 
       <div class="form-group">
-        <label>Phone</label>
+        <label for="phone">Phone</label>
         <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" maxlength="10" required />
-
       </div>
 
       <div class="form-group">
-        <label>Email</label>
-        <input type="email" id="email" required>
+        <label for="email">Email</label>
+        <input type="email" id="email" required />
       </div>
 
       <div class="form-group">
-        <label>College/Department</label>
-        <input type="text" id="college" required>
+        <label for="college">College/Department</label>
+        <input type="text" id="college" required />
       </div>
 
       <div class="share-section">
-        <button id="shareBtn">📤 Share on WhatsApp</button>
+        <button type="button" id="shareBtn">📤 Share on WhatsApp</button>
         <p id="shareCount">Click count: 0/5</p>
         <p id="shareComplete" class="success-text" style="display:none;">✅ Sharing complete. Please continue.</p>
       </div>
 
       <div class="form-group">
-        <label>Upload Resume Screenshot</label>
-        <input type="file" id="screenshot" accept="image/*">
+        <label for="screenshot">Upload Resume Screenshot</label>
+        <input type="file" id="screenshot" accept="image/*" />
       </div>
 
-      <button id="submitBtn">✨ Submit Registration</button>
-    </div>
+      <button type="submit" id="submitBtn">✨ Submit Registration</button>
+    </form>
 
     <div id="finalMsg" class="card" style="display:none;">
       <h2>🎉 Submission Successful!</h2>
