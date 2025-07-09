@@ -1,17 +1,18 @@
 let shareClicks = 0;
 const maxShares = 5;
 
+// Only allow digits in phone field
 document.getElementById('phone').addEventListener('input', function () {
   this.value = this.value.replace(/\D/g, '');
 });
 
-// Check localStorage to lock form after submission
+// Lock form after submission
 if (localStorage.getItem('submitted') === 'true') {
   document.getElementById('registrationForm').style.display = 'none';
   document.getElementById('finalMsg').style.display = 'block';
 }
 
-// WhatsApp Share Button
+// WhatsApp Share Logic
 document.getElementById('shareBtn').addEventListener('click', () => {
   if (shareClicks < maxShares) {
     shareClicks++;
@@ -26,7 +27,7 @@ document.getElementById('shareBtn').addEventListener('click', () => {
   }
 });
 
-// Form Submit
+// Form Submission
 document.getElementById('registrationForm').addEventListener('submit', (e) => {
   e.preventDefault();
 
@@ -37,16 +38,15 @@ document.getElementById('registrationForm').addEventListener('submit', (e) => {
 
   const name = document.getElementById('name').value.trim();
   const phone = document.getElementById('phone').value.trim();
-  if (!/^\d{10}$/.test(phone)) {
-  alert("Please enter a valid 10-digit phone number.");
-  return;
- }
-
-  
   const email = document.getElementById('email').value.trim();
   const college = document.getElementById('college').value.trim();
   const fileInput = document.getElementById('screenshot');
   const file = fileInput.files[0];
+
+  if (!/^\d{10}$/.test(phone)) {
+    alert("Please enter a valid 10-digit phone number.");
+    return;
+  }
 
   if (!file) {
     alert("Please upload a screenshot.");
@@ -58,20 +58,17 @@ document.getElementById('registrationForm').addEventListener('submit', (e) => {
   reader.onload = async function () {
     const base64 = reader.result.split(',')[1];
 
-    const formBody = new URLSearchParams();
-    formBody.append("name", name);
-    formBody.append("phone", phone);
-    formBody.append("email", email);
-    formBody.append("college", college);
-    formBody.append("screenshot", base64); // base64 encoded image
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("phone", phone);
+    formData.append("email", email);
+    formData.append("college", college);
+    formData.append("screenshot", base64); // Send base64 image
 
     try {
       const response = await fetch("https://script.google.com/macros/s/AKfycbxTjPY4QCABqujgHNsuCrIp4_5fZ2H9FgqkJZ-hqmK54aNoAwZypdiNwW319vNnW-8j_A/exec", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
-        },
-        body: formBody.toString(),
+        body: formData,
       });
 
       if (response.ok) {
